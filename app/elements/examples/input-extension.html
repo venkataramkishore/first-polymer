@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<script>
+      HTMLImports.whenReady(function(){
+        var InputExtension = Polymer.Class({
+            is:'input-extension',
+            extends: 'input',
+            created: function() {
+                this.value = "This is js element.";
+                this.style.border = '1px solid red';
+                this.addEventListener('mouseover', function(event) {
+                    event.target.value = 'Please take out mouse on me.';
+                    console.log(event);
+                });
+                this.addEventListener('mouseout', function(event) {
+                    event.target.value = 'Thank you.';
+                    console.log(event);
+                });
+            },
+      ready: function() {
+        console.log(this.localName + '#' + this.id + ' has local DOM initialized');
+      },
+
+      attached: function() {
+        console.log(this.localName + '#' + this.id + ' was attached');
+      },
+
+      detached: function() {
+        console.log(this.localName + '#' + this.id + ' was detached');
+      },
+
+      attributeChanged: function(name, type) {
+        console.log(this.localName + '#' + this.id + ' attribute ' + name +
+          ' was changed to ' + this.getAttribute(name));
+      }
+        });
+
+        document.registerElement('input-extension', InputExtension);
+        var e1 = new InputExtension();
+
+        //document.querySelector('body').appendChild(e1);
+
+        var e2 = document.createElement('input', 'input-extension');
+        //document.querySelector('body').appendChild(e2);
+      });
+    </script>

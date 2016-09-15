@@ -1,0 +1,56 @@
+<tdnk rel="import" href="../../bower_components/polymer/polymer.html">
+<tdnk rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<tdnk rel="import" href="../../bower_components/paper-button/paper-button.html">
+<tdnk rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<dom-module id="contract-item">
+    <style>
+
+    </style>
+
+    <template>
+        <tr>
+        <td>{{contract.customerName}}</td>
+        <td>{{contract.contractName}}</td>
+        <td>{{contract.startDate}}</td>
+        <td>{{contract.endDate}}</td>
+        <td>
+            <paper-button toggles raised   on-tap="editContract"><iron-icon icon="edit"></iron-icon></paper-button>
+            <paper-button toggles raised  on-tap="deleteContract"><iron-icon icon="delete"></iron-icon></paper-button>
+        </td>
+        <tr>
+    </template>
+</dom-module>
+<script>
+      HTMLImports.whenReady(function() {
+          Polymer({
+              is:'contract-item',
+              ready: function () {
+                  console.log('contract-item is loaded...');
+              },
+              properties: {
+                  contract : Object,
+                  childToastMessage: {
+                      type:String,
+                      value: 'Default message',
+                      notify: true,
+                      reflectToAttribute:true
+                }
+              },
+              editContract: function(event) {
+                  console.log('Edit Contract:: ' + JSON.stringify(this.contract) );
+                   this.childToastMessage = "Edit Contract :: " +  JSON.stringify(this.contract);
+                   this.fire('user-activity-event', {event:'Edit', data:this.contract});
+                //   this.$.toast2.open();
+                //   this.$.toast2.fitInto = this;
+              },
+              deleteContract: function(event) {
+                  console.log('Delete Contract :: ' + JSON.stringify(this.contract) );
+                   this.childToastMessage = "Delete Contract :: " +  JSON.stringify(this.contract);
+                   this.fire('user-activity-event', {event:'Delete', data:this.contract});
+                //   this.$.toast2.open();
+                //   this.$.toast2.fitInto = this;
+              }
+          });
+      });
+    </script>

@@ -1,0 +1,112 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<dom-module id="register-element">
+    <style>
+        div {
+            border: 1px solid gray;
+            border-radius: 15px;
+            display:inline-block;
+            padding: 10px;
+        }
+        .reg-element-layout form {
+            width: 50%;
+            border: 1px solid red;
+             border-radius: 15px;
+
+        }
+    </style>
+
+    <template>
+        <div >  
+                <form name="regform" class="reg-element-layout">
+                        <paper-input label="Username" id="inputWithButton" value="{{username}}">
+                            <iron-icon icon="mail" prefix></iron-icon>
+                            <div suffix>@email.com</div>
+                            <paper-icon-button suffix onclick="clearInput()" icon="clear" alt="clear" title="clear">
+                            </paper-icon-button>
+                        </paper-input>
+                        <paper-input label="Password" type="password" value="{{password}}"></paper-input>
+                    
+                        <paper-input label="Confirm Password" type="password" value="{{confPassword}}" auto-validate required pattern="{{password}}"
+                            error-message="Password(s) should match."></paper-input>
+                   
+                        <paper-dropdown-menu label="Gender">
+                            <paper-listbox class="dropdown-content" selected="{{gender}}">
+                                <paper-item >Male</paper-item>
+                                <paper-item >Female</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                   
+                        <paper-input label="Age" auto-validate pattern="[0-9]*" value="{{age}}" char-counter maxlength="2" error-message="Numeric value only!"></paper-input>
+                  
+                        <paper-button id="formSubmit" toggles raised>toggles</paper-button>
+                    
+                </form>
+            <div>
+                <ul>
+                    <li>Username: [[username]]</li>
+                    <li>Password: [[password]]</li>
+                    <li>ConfPassword: [[confPassword]]</li>
+                    <li>Gender: [[gender]]</li>
+                    <li>Age: [[age]]</li>
+                </ul>
+            </div>
+        </div>
+
+    </template>
+</dom-module>
+<script>
+      HTMLImports.whenReady(function() {
+          Polymer({
+              is:'register-element',
+              properties: {
+                  username: {
+                      type: String,
+                      value:'',
+                      notify: true,
+                      reflectToAttribute: true
+                  },
+                  password: {
+                      type: String,
+                      value: '',
+                      notify: true
+                  },
+                  confPassword: {
+                      type: String,
+                      value: '',
+                      notify: true
+                  },
+                  gender: {
+                      type: String,
+                      value: '',
+                      notify: true
+                  },
+                  age: {
+                      type:Number,
+                      value: 0,
+                      notify: true
+                  }
+              },
+              listeners: {
+                  //'click': 'clickHandler',
+                  //'tap': 'clickHandler',
+                  'formSubmit.tap':'clickHandler'
+              },
+              clickHandler: function(event) {
+                  console.log(event.target);
+              },
+              ready: function () {
+                  console.log('element loaded...');
+                  this.addEventListener('confPassword-changed', function (event) {
+                      console.log('confPassword '+event.target);
+                  });
+              }
+          });
+      });
+    </script>

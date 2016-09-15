@@ -1,0 +1,56 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="./contract-item.html">
+<dom-module id="contract-list">
+    <style>
+        table {
+            border: 1px solid grey;
+            border-radius: 15px;
+        }
+          #toast2 {
+    --paper-toast-background-color: red;
+    --paper-toast-color: white;
+  }
+    </style>
+
+    <template>
+       <div>
+           <table>
+               <template is="dom-repeat" items="{{contracts}}">
+                <contract-item contract="{{item}}" childToastMessage="{{toastMessage::value-changed}}"></contract-item>
+               </template>
+           </table>
+           <paper-toast id="toast2" class="fit-bottom" text="{{toastMessage}}"></paper-toast>
+       </div>
+    </template>
+</dom-module>
+<script>
+      HTMLImports.whenReady(function() {
+          Polymer({
+              is:'contract-list',
+              properties : {
+                  toastMessage: {
+                      type:String,
+                      value: 'This is default toast',
+                      reflectToAttribute: true
+                  }
+              },
+              ready: function () {
+                  console.log('contract-list loaded ...');
+                  this.contracts = [
+                      {customerName:'ING', contractName: 'SOG_ING', startDate: new Date(), endDate: (new Date()+10)},
+                      {customerName:'Philips', contractName: 'SOG_:PHIL', startDate: new Date(), endDate: (new Date()+10)},
+                      {customerName:'ABN AMRO', contractName: 'SOG_ABN', startDate: new Date(), endDate: (new Date()+10)},
+                      {customerName:'DEUTSCHE', contractName: 'SOG_DUT', startDate: new Date(), endDate: (new Date()+10)}
+                  ];
+                  this.addEventListener('user-activity-event', function(event){
+                      console.log(event.detail.event);
+                      this.toastMessage=JSON.stringify(event.detail.data);
+                      this.$.toast2.open();
+                  });
+              }
+          });
+      });
+    </script>

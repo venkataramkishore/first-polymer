@@ -1,0 +1,83 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<script src="../../bower_components/lodash/lodash.min.js">
+    
+</script>
+<dom-module id="login-element">
+    <style>
+        .layout {
+            border: 1px solid grey;
+            border-radius: 15px;
+            padding: 20px;
+            width: 50%;
+        }
+        
+    </style>
+
+    <template>
+        <div class="layout">
+            <form name="loginform">
+
+                <paper-input label="Username" id="un" value="{{username}}" auto-validate required 
+                    error-message="{{errorMessage}}">
+                    <iron-icon icon="mail" prefix></iron-icon>
+                    <div suffix>@email.com</div>
+                    <paper-icon-button suffix on-tap="clearInput()" icon="clear" alt="clear" title="clear">
+                    </paper-icon-button>
+                </paper-input>
+
+                <paper-input label="Password" id="pwd" type="password" value="{{password}}" auto-validate required 
+                            error-message="{{errorMessage}}"></paper-input>
+
+                <paper-button id="formSubmit" toggles raised>Login</paper-button>
+            </form>
+        </div>
+    </template>
+
+    <script>
+        HTMLImports.whenReady(function(){
+            Polymer({
+                is:'login-element',
+                properties : {
+                    success: function() {
+
+                    },
+                    failure: function() {
+
+                    }
+                },
+                clearInput : function () {
+                    this.username='';
+                },
+                listeners : {
+                    'formSubmit.tap':'validateLogin'
+                },
+                validateLogin: function () {
+                   
+                    this.$.un.setAttribute('invalid', false);
+                    this.$.pwd.setAttribute('invalid', false);
+
+                    if(_.isEqual(this.username, 'kishore') && _.isEqual(this.password, 'kishore')) {
+                        this.errorMessage='Login successfull';
+                       
+                    }else {
+                        this.$.un.setAttribute('invalid', true);
+                        this.$.pwd.setAttribute('invalid', true);
+                        this.errorMessage='Wrong or mismatch credentials';
+                    }
+                },
+                ready: function() {
+
+                    this.username='';
+                    this.password='';
+                    this.errorMessage='Field is mandatory';
+                }
+            });
+
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,43 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="./input-extension.html" />
+
+<dom-module id="example-element">
+  <template>
+    <div>Welcome to examples!!</div>
+    <ul class="list-group">
+      <template is="dom-repeat" items="{{exampleItems}}">
+        <li class="list-group-item" >
+          <a href$="{{baseUrl}}examples/{{item}}">{{item}}</a>
+        </li>
+      </template>
+    </ul>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Offshore Price(s)</h3>
+      </div>
+      <div class="panel-body">
+        <input is="input-extension"/>
+      </div>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+      HTMLImports.whenReady(function(){
+        Polymer({
+            is:'example-element',
+            properties :
+            {
+              exampleItems:{
+                type: Array,
+                value: [
+                  'Simple element',
+                  'Js element',
+                  'Input extension'
+                ]
+              }
+            }
+        })
+      });
+    </script>
